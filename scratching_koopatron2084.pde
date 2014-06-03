@@ -259,9 +259,9 @@ boolean touchingAnenemy() {
   boolean touching = false;
   for (int i=0; i<numberOfenemies; i++) {
     if (mario.touchingkoopa(enemies.get(i))) {
-      if (speed_Y==-99&abs((standing_Y-enemies.get(i).standing_Y))<10&((int)(enemies.get(i).costumeNumber)%3)!=2) touching=true;
+      if (speed_Y==-99&abs((standing_Y-enemies.get(i).standing_Y-enemies.get(i).bounce_Y))<10&((int)(enemies.get(i).costumeNumber)%3)!=2) touching=true;
       else { 
-        if ((speed_Y>0)&abs((standing_Y-enemies.get(i).standing_Y))<10) {
+        if ((speed_Y>0)&abs((standing_Y-enemies.get(i).standing_Y-enemies.get(i).bounce_Y))<10) {
           touching=false;
           if (mario.pos.x > enemies.get(i).pos.x) enemies.get(i).direction = 180;
           else enemies.get(i).direction = 0;
