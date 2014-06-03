@@ -7,6 +7,7 @@ Stage stage;
 static int rotationStyle_AllAround=0;
 static int rotationStyle_LeftRight=1;
 static int rotationStyle_DontRotate=2;
+static int startingEnemies = 1;
 int numberOfenemies = 0;
 int numberOfFireballs = 0;
 int speed_Y = -99; 
@@ -30,7 +31,7 @@ void setup() {
   // add your own initialization code here
   mario = new mario(this);
   
-  for (int i = numberOfenemies; i<8; i++) {
+  for (int i = numberOfenemies; i<startingEnemies; i++) {
      addenemy();
   }
   mario.update(); // this makes sure a translate gets called before the title screen b/g is displayed
@@ -128,7 +129,7 @@ void gameloop() {
 
 // this adds new enemies to the mix every 30 seconds
 void increaseDifficultyByTime() {
-  int targetNumberOfenemies = 8+(int)(stage.timer()/30);
+  int targetNumberOfenemies = startingEnemies+(int)(stage.timer()/30);
   if (numberOfenemies<targetNumberOfenemies) 
     for (int i = numberOfenemies; i<targetNumberOfenemies; i++) {
       addenemy();
@@ -246,19 +247,21 @@ void moveMario() {
     speed_Y++;
     if (speed_Y > 10) speed_Y = -99;
     mario.setCostume(mario.costume_jumping);
-  }
+  } else  mario.setCostume(mario.costume_standing);
+  
   // mario is doing nothing, so make him stand still. you might put an "idle animation" here such as when Sonic the Hedgehog taps his feet
   //else mario.setCostume(mario.costume_standing);
   wrapAtEdges(mario);
 }
 
 boolean touchingAnenemy() {
+  // need modification to match jumping heights up: mario should be able to pass under a flying koopa
   boolean touching = false;
   for (int i=0; i<numberOfenemies; i++) {
     if (mario.touchingkoopa(enemies.get(i))) {
-      if (speed_Y==-99&abs((standing_Y-enemies.get(i).standing_Y))<15&((int)(enemies.get(i).costumeNumber)%3)!=2) touching=true;
+      if (speed_Y==-99&abs((standing_Y-enemies.get(i).standing_Y))<10&((int)(enemies.get(i).costumeNumber)%3)!=2) touching=true;
       else { 
-        if ((speed_Y>0)&abs((standing_Y-enemies.get(i).standing_Y))<15) {
+        if ((speed_Y>0)&abs((standing_Y-enemies.get(i).standing_Y))<10) {
           touching=false;
           if (mario.pos.x > enemies.get(i).pos.x) enemies.get(i).direction = 180;
           else enemies.get(i).direction = 0;
