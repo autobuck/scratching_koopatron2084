@@ -63,7 +63,8 @@ public class Stage {
   }
 
   public void update() {
-    p.translate(-(p.width/2), -(p.height/2));    
+    //p.translate(-(p.width/2), -(p.height/2));
+    draw();    
   }
 
   public void draw() {    
@@ -87,20 +88,20 @@ public class Stage {
   public void nextBackdrop() { 
     backdropNumber++;
     if (backdropNumber > numberOfBackdrops + 1) backdropNumber=0;
-    draw();
+    //draw();
   }
 
   // change to previous backdrop
   public void previousCostume() {
     backdropNumber--;
     if (backdropNumber < 0) backdropNumber=backdropNumber;
-    draw();
+    //draw();
   }
 
   // switch to specific costume
   public void switchToBackdrop(int newBackdropNumber) {
     backdropNumber=newBackdropNumber;
-    draw();
+    //draw();
   }
 
   }

@@ -85,6 +85,7 @@ void checkKeysPressed() {
 }
 
 void startTheGame() {
+   stage.switchToBackdrop(stage.bg_highway);
    stage.resetTimer();
    gamestate = "playing";
    gameTime = 0;
@@ -99,25 +100,29 @@ void startTheGame() {
 
 void showTitleScreen() {
   stage.switchToBackdrop(stage.bg_title);
+  stage.update();
 }
 
 void showGameOverScreen() {
   stage.switchToBackdrop(stage.bg_gameover);
+  stage.update();
   text("Time: "+gameTime,width/2,(height/2)+50);
 }
 
 // this is the main game logic. we have this here instead of "draw" so that we can accomodate other "game modes"
 // such as "title screen" and "game over screen" where the behavior of mouse, keyboard, and marios may be different
 void gameloop() {
-  stage.switchToBackdrop(stage.bg_highway);
-  increaseDifficultyByTime();
-  
+  stage.update();
+    
   moveMario();
   moveFireballs();
-  moveEnemies();
   mario.update(); // update mario last so mario appears on top
+  
+  moveAndUpdateEnemies();
+  
   drawTimer();
   
+  increaseDifficultyByTime();
   delay(50);
 }
 
@@ -269,7 +274,7 @@ void addenemy() {
     numberOfenemies++;
 }
 
-void moveEnemies() {
+void moveAndUpdateEnemies() {
   for (int currentenemy = 0; currentenemy<numberOfenemies; currentenemy++) {
       enemies.get(currentenemy).drive();
       checkenemyBoundaries(enemies.get(currentenemy));
