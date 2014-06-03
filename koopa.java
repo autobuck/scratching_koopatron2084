@@ -110,6 +110,9 @@ public class koopa {
 
   // load "Scratch" cat costumes
   public void loadDefaultCostumes() {
+    addCostume("images/enemy_goomba1.png");
+    addCostume("images/enemy_goomba2.png");
+    addCostume("images/enemy_goomba3.png");
     addCostume("images/enemy_koopa1.png");
     addCostume("images/enemy_koopa2.png");
     addCostume("images/enemy_koopa3.png");
@@ -119,9 +122,6 @@ public class koopa {
     addCostume("images/enemy_koopared1.png");
     addCostume("images/enemy_koopared2.png");
     addCostume("images/enemy_koopared3.png");
-    addCostume("images/enemy_goomba1.png");
-    addCostume("images/enemy_goomba2.png");
-    addCostume("images/enemy_goomba3.png");
     addCostume("images/enemy_beetle1.png");
     addCostume("images/enemy_beetle2.png");
     addCostume("images/enemy_beetle3.png");
@@ -281,7 +281,8 @@ public class koopa {
   
 public void die() {
   switchToCostume((((int)(costumeNumber/3))*3)+2);
-  deathTimer = 100;
+  if (costumeNumber<=2) deathTimer=250; // Goombas linger then vanish; 
+  else deathTimer = 50;                 // anything else gets kicked as a shell, after a shorter time
 }
 
 public void ignition() {
@@ -313,16 +314,20 @@ public void startOnRight() {
 }
 
 public void drive() {
+  int speed=8;
+  if (((int)(costumeNumber))%3==2) speed=12; // kicked shells move faster
   if (deathTimer>0) { 
     p.println(deathTimer); 
     deathTimer -= 50; 
-    if (deathTimer<=0) deathTimer=-9999; 
+    if (deathTimer<=0) {
+      if (costumeNumber<=2) ignition(); else deathTimer=-9999; // restart Goomba right away, or kick shell if not Goomba
+    } 
   }
   else {
     if (startDelay<=0) show();
     if (startDelay>0) startDelay -= 50;
-    else if (direction==0) pos.x=pos.x+10;
-    else if (direction==180) pos.x=pos.x-10;
+    else if (direction==0) pos.x=pos.x+speed;
+    else if (direction==180) pos.x=pos.x-speed;
     //move(10);
     // change costumes if necessary; do not change on costume 3, which means "dead"
     if (((int)(costumeNumber))%3==0) nextCostume();

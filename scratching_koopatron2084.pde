@@ -30,7 +30,7 @@ void setup() {
   // add your own initialization code here
   mario = new mario(this);
   
-  for (int i = numberOfenemies; i<5; i++) {
+  for (int i = numberOfenemies; i<8; i++) {
      addenemy();
   }
   mario.update(); // this makes sure a translate gets called before the title screen b/g is displayed
@@ -128,7 +128,7 @@ void gameloop() {
 
 // this adds new enemies to the mix every 30 seconds
 void increaseDifficultyByTime() {
-  int targetNumberOfenemies = 5+(int)(stage.timer()/30);
+  int targetNumberOfenemies = 8+(int)(stage.timer()/30);
   if (numberOfenemies<targetNumberOfenemies) 
     for (int i = numberOfenemies; i<targetNumberOfenemies; i++) {
       addenemy();
@@ -285,7 +285,12 @@ void moveAndUpdateEnemies() {
         if (currentenemy==otherenemy) { } // do nothing if enemy is same enemy
         // otherwise, check if enemy is touching another enemy and reset position if so
         else if (enemies.get(currentenemy).touchingkoopa(enemies.get(otherenemy))) 
-          enemies.get(currentenemy).ignition();
+//          if (enemies.get(otherenemy).costumeNumber%3==2) enemies.get(currentenemy).die(); // die if touching a shell
+          if (enemies.get(currentenemy).costumeNumber%3==2) { 
+            enemies.get(otherenemy).die(); // kill if enemy is a shell
+            if (enemies.get(currentenemy).pos.x > enemies.get(otherenemy).pos.x) enemies.get(otherenemy).direction = 180;
+            else enemies.get(otherenemy).direction = 0;
+          }
     }
     enemies.get(currentenemy).update();
   }
