@@ -151,7 +151,8 @@ void pauseOrUnpause() {
 
 // fireball sprite functions
 void throwFireball(int dir) {
-  if (fireballTimeout>0) fireballTimeout -= 50; else if (numberOfFireballs<5) {
+  if (fireballTimeout>0) fireballTimeout -= 50; 
+  else if (numberOfFireballs<3) {
     fireballs.add(new fireball(this));
     fireballs.get(numberOfFireballs).size=150;
     fireballs.get(numberOfFireballs).pos.x = mario.pos.x;

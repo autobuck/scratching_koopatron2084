@@ -317,7 +317,6 @@ public void drive() {
   int speed=8;
   if (((int)(costumeNumber))%3==2) speed=12; // kicked shells move faster
   if (deathTimer>0) { 
-    p.println(deathTimer); 
     deathTimer -= 50; 
     if (deathTimer<=0) {
       if (costumeNumber<=2) ignition(); else deathTimer=-9999; // restart Goomba right away, or kick shell if not Goomba
@@ -326,9 +325,7 @@ public void drive() {
   else {
     if (startDelay<=0) show();
     if (startDelay>0) startDelay -= 50;
-    else if (direction==0) pos.x=pos.x+speed;
-    else if (direction==180) pos.x=pos.x-speed;
-    //move(10);
+    else move(10);
     // change costumes if necessary; do not change on costume 3, which means "dead"
     if (((int)(costumeNumber))%3==0) nextCostume();
     else if (((int)(costumeNumber))%3==2) { }
