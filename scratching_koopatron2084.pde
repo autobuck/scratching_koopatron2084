@@ -280,7 +280,7 @@ void addenemy() {
 
 void moveAndUpdateEnemies() {
   for (int currentenemy = 0; currentenemy<numberOfenemies; currentenemy++) {
-      enemies.get(currentenemy).drive();
+      enemies.get(currentenemy).walkTheTurtles();
       checkenemyBoundaries(enemies.get(currentenemy));
       for (int otherenemy = 0; otherenemy<numberOfenemies; otherenemy++) {
         if (currentenemy==otherenemy) { } // do nothing if enemy is same enemy

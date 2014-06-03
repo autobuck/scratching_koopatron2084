@@ -38,6 +38,8 @@ public class koopa {
   public boolean penDown;
   public int speed = 10;
   public int standing_Y;
+  public int bounce_Y = 0;
+  public int bounce_speed = 10;
   int startDelay, deathTimer;
   
   
@@ -72,7 +74,7 @@ public class koopa {
     if (visible) {
       p.pushMatrix(); // save old visual style for other sprites
       // set the center of the screen to (0, 0)
-      p.translate((p.width/2)+pos.x, (p.height/2)+pos.y);    
+      p.translate((p.width/2)+pos.x, (p.height/2)+pos.y-bounce_Y);    
           
       p.imageMode(p.CENTER);
       // locked left-right rotation
@@ -301,6 +303,7 @@ public void startOnLeft() {
   pointInDirection(0);
   int startingCostume = ((int)(p.random(0,numberOfCostumes/3)))*3;
   switchToCostume(startingCostume);
+  if (costumeNumber>=14) { bounce_speed = 10; bounce_Y = 0; }
 }
 
 public void startOnRight() {
@@ -311,10 +314,12 @@ public void startOnRight() {
   pointInDirection(180);
   int startingCostume = ((int)(p.random(0,numberOfCostumes/3)))*3;
   switchToCostume(startingCostume);
+  if (costumeNumber>=14) { bounce_speed = 10; bounce_Y = 0; }
 }
 
-public void drive() {
+public void walkTheTurtles() {
   int speed=8;
+  if (costumeNumber>=14) speed=6; // flying koopa are a little slow
   if (((int)(costumeNumber))%3==2) speed=12; // kicked shells move faster
   if (deathTimer>0) { 
     deathTimer -= 50; 
@@ -326,6 +331,17 @@ public void drive() {
     if (startDelay<=0) show();
     if (startDelay>0) startDelay -= 50;
     else move(10);
+    if (costumeNumber>=15) { // make flying koopa bounce
+      p.println(costumeNumber+" bounce speed! "+bounce_speed+" bounce Y! "+bounce_Y);
+      //if (bounce_speed<=10) bounce_speed = 10;
+      bounce_speed -= 1;
+      if (bounce_speed < -5) bounce_speed = -5;
+      bounce_Y += bounce_speed;
+      if (bounce_Y<0) { 
+        bounce_speed=10; 
+      }
+     
+    }
     // change costumes if necessary; do not change on costume 3, which means "dead"
     if (((int)(costumeNumber))%3==0) nextCostume();
     else if (((int)(costumeNumber))%3==2) { }
