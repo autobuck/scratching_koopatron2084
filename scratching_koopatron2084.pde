@@ -258,7 +258,10 @@ boolean touchingAnenemy() {
       if (speed_Y==-99&abs((standing_Y-enemies.get(i).standing_Y))<15&((int)(enemies.get(i).costumeNumber)%3)!=2) touching=true;
       else { 
         if ((speed_Y>0)&abs((standing_Y-enemies.get(i).standing_Y))<15) {
-          touching=false; enemies.get(i).die(); 
+          touching=false;
+          if (mario.pos.x > enemies.get(i).pos.x) enemies.get(i).direction = 180;
+          else enemies.get(i).direction = 0;
+          enemies.get(i).die(); 
         }
       }
     }

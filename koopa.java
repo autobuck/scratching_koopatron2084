@@ -281,8 +281,7 @@ public class koopa {
   
 public void die() {
   switchToCostume((((int)(costumeNumber/3))*3)+2);
-  deathTimer = 500;
-  p.println(deathTimer);
+  deathTimer = 100;
 }
 
 public void ignition() {
@@ -298,7 +297,7 @@ public void startOnLeft() {
   int lane = (int)p.random(0,4);
   standing_Y = (int)(-60+(60*lane));
   pos.y = standing_Y;
-  pointInDirection(90);
+  pointInDirection(0);
   int startingCostume = ((int)(p.random(0,numberOfCostumes/3)))*3;
   switchToCostume(startingCostume);
 }
@@ -308,18 +307,23 @@ public void startOnRight() {
   int lane = (int)p.random(0,4);
   standing_Y = (int)(-60+(60*lane));
   pos.y = standing_Y;
-  pointInDirection(270);
+  pointInDirection(180);
   int startingCostume = ((int)(p.random(0,numberOfCostumes/3)))*3;
   switchToCostume(startingCostume);
 }
 
 public void drive() {
-  if (deathTimer>0) { p.println(deathTimer); deathTimer -= 50; if (deathTimer<=0) ignition(); }
+  if (deathTimer>0) { 
+    p.println(deathTimer); 
+    deathTimer -= 50; 
+    if (deathTimer<=0) deathTimer=-9999; 
+  }
   else {
     if (startDelay<=0) show();
     if (startDelay>0) startDelay -= 50;
-    else if (direction==90) pos.x=pos.x+10;
-    else if (direction==270) pos.x=pos.x-10;
+    else if (direction==0) pos.x=pos.x+10;
+    else if (direction==180) pos.x=pos.x-10;
+    //move(10);
     // change costumes if necessary; do not change on costume 3, which means "dead"
     if (((int)(costumeNumber))%3==0) nextCostume();
     else if (((int)(costumeNumber))%3==2) { }
