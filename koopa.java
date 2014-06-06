@@ -74,7 +74,7 @@ public class koopa {
     if (visible) {
       p.pushMatrix(); // save old visual style for other sprites
       // set the center of the screen to (0, 0)
-      p.translate((p.width/2)+pos.x, (p.height/2)+pos.y-bounce_Y);    
+      p.translate(pos.x, pos.y-bounce_Y);    
           
       p.imageMode(p.CENTER);
       // locked left-right rotation
@@ -333,8 +333,6 @@ public void walkTheTurtles() {
     if (startDelay>0) startDelay -= 50;
     else move(speed);
     if (costumeNumber>=15) { // make flying koopa bounce
-      p.println(costumeNumber+" bounce speed! "+bounce_speed+" bounce Y! "+bounce_Y);
-      //if (bounce_speed<=10) bounce_speed = 10;
       bounce_speed -= 1;
       if (bounce_speed < -5) bounce_speed = -5;
       bounce_Y += bounce_speed;

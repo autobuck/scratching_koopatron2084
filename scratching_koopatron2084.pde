@@ -7,7 +7,7 @@ Stage stage;
 static int rotationStyle_AllAround=0;
 static int rotationStyle_LeftRight=1;
 static int rotationStyle_DontRotate=2;
-static int startingEnemies = 1;
+static int startingEnemies = 5;
 int numberOfenemies = 0;
 int numberOfFireballs = 0;
 int speed_Y = -99; 
@@ -34,7 +34,6 @@ void setup() {
   for (int i = numberOfenemies; i<startingEnemies; i++) {
      addenemy();
   }
-  mario.update(); // this makes sure a translate gets called before the title screen b/g is displayed
 }
   
 void draw() {
@@ -93,7 +92,6 @@ void startTheGame() {
    mario.size=80;
    mario.goToXY(0,0);
    numberOfFireballs=0;
-   mario.update(); // this makes sure a translate gets called before the title screen b/g is displayed
    for (int i=0; i<numberOfenemies; i++) {
      enemies.get(i).ignition();
    }
@@ -107,7 +105,7 @@ void showTitleScreen() {
 void showGameOverScreen() {
   stage.switchToBackdrop(stage.bg_gameover);
   stage.update();
-  text("Time: "+gameTime,width/2,(height/2)+50);
+  text("Time: "+gameTime,0,50);
 }
 
 // this is the main game logic. we have this here instead of "draw" so that we can accomodate other "game modes"
@@ -140,7 +138,7 @@ void increaseDifficultyByTime() {
 void drawTimer() {
   textAlign(CENTER);
   gameTime=stage.timer();
-  text("Time: "+gameTime,width/2,10);
+  text("Time: "+gameTime,0,-150);
 }
 
 void pauseOrUnpause() {
