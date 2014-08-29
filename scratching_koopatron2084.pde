@@ -12,7 +12,7 @@ int numberOfenemies = 0;
 int numberOfFireballs = 0;
 int speed_Y = -99; 
 int standing_Y;
-int gameTime = 0;
+int gameTime = 0; 
 int fireballTimeout = 0;
 String gamestate = "title";
 boolean[] keyIsDown = new boolean[256];
