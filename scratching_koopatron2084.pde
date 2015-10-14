@@ -34,6 +34,7 @@ void setup() {
   for (int i = numberOfenemies; i<startingEnemies; i++) {
      addenemy();
   }
+  mario.update();
 }
   
 void draw() {
